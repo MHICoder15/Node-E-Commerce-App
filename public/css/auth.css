@@ -1,0 +1,13 @@
+.register-form,
+.login-form,
+.reset-form {
+  width: 20rem;
+  max-width: 90%;
+  margin: auto;
+  display: block;
+}
+
+.centered {
+  text-align: center;
+  padding: 1rem 0;
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../layouts/head')%>
+  <body>
+    <%- include('../layouts/navigation')%>
+    <main>
+      <% if (products.length > 0) { %>
+      <ul class="cart__item-list">
+        <% products.forEach(p => { %>
+        <li class="cart__item">
+          <h1><%= p.productId.title %></h1>
+          <h2>Quantity: <%= p.quantity %></h2>
+        </li>
+        <% }) %>
+      </ul>
+      <div class="centered">
+        <h2>Total Price: $<%= totalSum %></h2>
+      </div>
+      <hr />
+      <div class="centered">
+        <button id="order-btn" type="button" class="btn">CHECKOUT</button>
+        <script src="https://js.stripe.com/v3/"></script>
+        <script>
+          let stripe = Stripe("<%= stripePublicKey %>");
+          let orderBtn = document.getElementById("order-btn");
+          orderBtn.addEventListener("click", function () {
+            stripe.redirectToCheckout({
+              sessionId: "<%= sessionId %>",
+            });
+          });
+        </script>
+      </div>
+      <% } else { %>
+      <h1>No Products in Cart!</h1>
+      <% } %>
+    </main>
+    <%- include('../layouts/footer')%>
+  </body>
+</html>

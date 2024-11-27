@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%- include('../layouts/head')%>
+  <body>
+    <%- include('../layouts/navigation')%>
+    <main>
+      <% if(errorMessage && errorMessage.length > 0) { %>
+      <div class="toast-container">
+        <div class="toast toast-error">
+          <div><%= errorMessage %></div>
+          <img
+            class="toast-cross-icon"
+            src="/img/cross-icon-error.svg"
+            onclick="closeToast(event)"
+          />
+        </div>
+        <div class="toast-duration error"></div>
+      </div>
+      <% } else if(successMessage && successMessage.length > 0) { %>
+      <div class="toast-container">
+        <div class="toast toast-success">
+          <div><%= successMessage %></div>
+          <img
+            class="toast-cross-icon"
+            src="/img/cross-icon-success.svg"
+            onclick="closeToast(event)"
+          />
+        </div>
+        <div class="toast-duration success"></div>
+      </div>
+      <% } %>
+      <form class="login-form" action="/login" method="POST">
+        <div class="form-control">
+          <label for="email">Email*</label>
+          <input
+            class="<%= validationErrors.includes('email') ? 'invalid': '' %>"
+            type="email"
+            name="email"
+            id="email"
+            value="<%= inputData.email %>"
+          />
+          <% if(validationErrors.includes('email')) { %>
+          <p class="error-msg">Email field is required.</p>
+          <% } %>
+        </div>
+        <div class="form-control">
+          <label for="password">Password*</label>
+          <input
+            class="<%= validationErrors.includes('password') ? 'invalid': '' %>"
+            type="password"
+            name="password"
+            id="password"
+            value="<%= inputData.password %>"
+          />
+          <% if(validationErrors.includes('password')) { %>
+          <p class="error-msg">Password field is required.</p>
+          <% } %>
+        </div>
+        <input type="hidden" name="_csrf" value="<%= csrfToken %>" />
+        <button class="btn" type="submit">Login</button>
+      </form>
+    </main>
+    <%- include('../layouts/footer')%>
+  </body>
+</html>
